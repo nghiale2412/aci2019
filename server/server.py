@@ -3,6 +3,7 @@ import asyncio
 import struct
 import math
 
+
 def init_socket_server():
 	server_udp_port = 27015
 	server_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -11,6 +12,7 @@ def init_socket_server():
 	server_socket.bind(("", server_udp_port))
 	print("Server started successfully.")
 	return server_socket
+
 
 async def on_connection_request(socket):
 	print("Listening for connection from client...")
@@ -26,19 +28,20 @@ async def on_connection_request(socket):
 		except Exception as err:
 			raise err
 
+
 def convertData(input):
-	SHORT_NORMALIZE= (1.0/32768.0)
+	SHORT_NORMALIZE = (1.0/32768.0)
 	swidth = 2
     count = len(input)/swidth
     format= "%dh"%(count)
-    #short is 16 bit int
+    # short is 16 bit int
     shorts = struct.unpack(format, input)
     
     sum_square=0.0
     for sample in shorts:
         n= sample * SHORT_NORMALIZE
         sum_square += n*n
-    #compute rms
+    # compute rms
     rms=math.pow(sum_square/count,0.5);
     return rms * 1000
 
