@@ -1,0 +1,25 @@
+# PHYTHON SCRIPT TO RECV THE DATA 
+
+#Importing the socket module
+import socket
+#create socket object
+sock = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
+#Define the IPV4 address
+address = ("127.0.0.1", 5002)
+#Use bind function to bind it together
+address = ("127.0.0.1", 5002)
+#Data to receive 
+while True:
+	data,addr = sock.recvfrom(1024)
+	print data
+	print addr
+	
+
+#PHYTHON SCRIPT TO SEND THE DATA
+#Import the modules
+import socket
+#Creating the socket object
+sock = socket.socket(socket.AF_INET ,socket.SOCK_DGRAM)
+#sending the data (type of the data, ip_adress, port number)
+sock.sendto("SUP" ,("127.0.0.1" ,5002))
+
