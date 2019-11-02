@@ -29,22 +29,6 @@ async def on_connection_request(socket):
 			raise err
 
 
-def convertData(input):
-	SHORT_NORMALIZE = (1.0/32768.0)
-	swidth = 2
-    count = len(input)/swidth
-    format= "%dh"%(count)
-    # short is 16 bit int
-    shorts = struct.unpack(format, input)
-    
-    sum_square=0.0
-    for sample in shorts:
-        n= sample * SHORT_NORMALIZE
-        sum_square += n*n
-    # compute rms
-    rms=math.pow(sum_square/count,0.5);
-    return rms * 1000
-
 async def main():
 	# creating server socket
 	server_socket = init_socket_server()
@@ -65,6 +49,4 @@ if __name__ == "__main__":
 	finally:
 		# close loop on finish
 		loop.close()
-		
-
 

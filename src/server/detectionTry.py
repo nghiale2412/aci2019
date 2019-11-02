@@ -51,7 +51,7 @@ print("Finished recording.!")
 # stop the stream, close it, and terminate the pyaudio instantiation
 stream.stop_stream()
 stream.close()
-audio.terminate()
+#audio.terminate()
 
 # save the audio frames as .wav file
 wavefile = wave.open(wav_output_filename,'wb')
