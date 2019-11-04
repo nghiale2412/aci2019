@@ -5,6 +5,7 @@ import sys
 import struct
 import math
 
+
 class SoundDetector():
 	def __init__(self, threshold):
 		self.chunk = 1024
@@ -29,12 +30,12 @@ class SoundDetector():
 		return rms * 1000
 
 	def start_recording(self, connection):
-		stream = self.pyrecord.open(format = self.format,
-											channels = self.channels,
-											rate = self.rate,
-											input = True,
-											output = True,
-											frames_per_buffer = self.chunk)
+		stream = self.pyrecord.open(format=self.format,
+									channels=self.channels,
+									rate=self.rate,
+									input=True,
+									output=True,
+									frames_per_buffer=self.chunk)
 		print("start recording")
 		for i in range(0, int(44100 / self.chunk * self.record_seconds)):
 			data = stream.read(self.chunk)
@@ -109,4 +110,3 @@ if __name__ == "__main__":
 	finally:
 		# close loop on finish
 		loop.close()
-
