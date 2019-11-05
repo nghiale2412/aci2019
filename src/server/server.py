@@ -4,7 +4,7 @@ import pyaudio
 import sys
 import struct
 import math
-
+import datetime
 
 class SoundDetector():
     def __init__(self, threshold):
@@ -12,7 +12,7 @@ class SoundDetector():
         self.format = pyaudio.paInt16
         self.channels = 1
         self.rate = 44100
-        self.record_seconds = 5
+        self.record_seconds = 10
         self.swidth = 2
         self.threshold = threshold
         self.short_normalize = (1.0/32768.0)
@@ -38,7 +38,9 @@ class SoundDetector():
             data = stream.read(self.chunk)
             rms_value = self.convert_data(data)
             if rms_value > self.threshold:
-                message = "Sound detected"
+                timestamp = datetime.datetime.now()
+                message = "{}:{}:{}.{} Sound detected".format(timestamp.hour, timestamp.minute, 
+                                                            timestamp.second, timestamp.microsecond)
                 # send data to client
                 connection.sendall(message.encode())
 
@@ -79,7 +81,7 @@ class TcpServer():
                     print("Received {!r}".format(data.decode()))
 
                     if data:
-                        detector = SoundDetector(20)
+                        detector = SoundDetector(10)
                         detector.start_recording(conn)
                     else:
                         break
