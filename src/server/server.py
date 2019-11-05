@@ -92,7 +92,7 @@ class TcpServer():
 
 async def main():
     # setup server: TcpServer(host, port)
-    tcp_server = TcpServer("", 9998)
+    tcp_server = TcpServer("", 9999)
     # start a task that will listen for connection from clients asynchronously
     task = loop.create_task(tcp_server.start())
     await asyncio.wait(task)

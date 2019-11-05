@@ -1,4 +1,5 @@
-FROM ubuntu:16.04
+FROM arm32v7/debian:stretch-slim
+COPY qemu-arm-static /usr/bin/qemu-arm-static
 RUN apt-get update
 RUN apt-get -y install git
 RUN apt-get install -y python3 python3-pip wget
