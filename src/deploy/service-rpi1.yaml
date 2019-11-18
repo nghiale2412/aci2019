@@ -1,13 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: aci2019-service
+  name: aci2019-service-rpi1
 spec:
   type: NodePort
   ports:
   - port: 27015
     targetPort: 27015
     protocol: TCP
-    nodePort: 24412
+    nodePort: 30666
   selector:
     app: aci2019-app

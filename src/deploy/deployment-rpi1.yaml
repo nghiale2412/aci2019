@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aci2019-deployment-rpi1
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: aci2019-app
+  template:
+    metadata:
+      labels:
+         app: aci2019-app
+    spec:
+      containers:
+      - name: aci2019-app
+        image: tnle2412/aci2019
+        ports:
+        - containerPort: 27015
+          protocol: TCP
+      nodeSelector:
+        nodename: rpi-1
