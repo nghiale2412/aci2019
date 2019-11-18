@@ -10,4 +10,4 @@ spec:
     protocol: TCP
     nodePort: 24412
   selector:
-app: aci2019-app
+    app: aci2019-app

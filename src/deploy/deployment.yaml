@@ -1,9 +1,12 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: aci2019-deployment
 spec:
-  replicas: 1
+  replicas: 3
+  selector:
+    matchLabels:
+      app: aci2019-app
   template:
     metadata:
       labels:
