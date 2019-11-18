@@ -1,4 +1,0 @@
-libjack-jackd2-dev 
-portaudio19-dev
-asyncio
-pyaudio

@@ -1,6 +1,6 @@
 docker build -t aci2019 .
 docker run -d -it --privileged \
-	-v dev/snd:/dev/snd \
-	-v dev/bus/usb:/dev/bus/usb \ 
+	-device=dev/snd:/dev/snd \
+	-device=dev/bus/usb:/dev/bus/usb \
 	-p 9999:9999/tcp \
 	aci2019
