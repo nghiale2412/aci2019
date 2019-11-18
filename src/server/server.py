@@ -5,6 +5,7 @@ import sys
 import struct
 import math
 import datetime
+import logging
 
 class SoundDetector():
     def __init__(self, threshold):
@@ -33,7 +34,7 @@ class SoundDetector():
         stream = self.pyrecord.open(format=self.format, channels=self.channels,
                                     rate=self.rate, input=True, output=True,
                                     frames_per_buffer=self.chunk)
-        print("start recording")
+        logging.info("start recording")
         for i in range(0, int(44100 / self.chunk * self.record_seconds)):
             data = stream.read(self.chunk)
             rms_value = self.convert_data(data)
@@ -45,7 +46,7 @@ class SoundDetector():
                 connection.sendall(message.encode())
 
         # done recording
-        print("recording done")
+        logging.info("recording done")
         message = "done"
         connection.sendall(message.encode())
 
@@ -63,22 +64,22 @@ class TcpServer():
         # bind listener to specified port
         self.server_socket.bind((self.server_host, self.server_port))
 
-        print("Server setup successfully.")
+        logging.info("Server setup successfully.")
 
     def start(self):
         # start listening for incoming connection
         self.server_socket.listen(1)
-        print("Listening for connection from client...")
+        logging.info("Listening for connection from client...")
 
         while True:
             # accept connection from client
             conn, client_address = self.server_socket.accept()
             try:
-                print("Received connection from {}".format(client_address))
+                logging.info("Received connection from {}".format(client_address))
                 while True:
                     # read request from client(s)
                     data = conn.recv(1024)
-                    print("Received {!r}".format(data.decode()))
+                    logging.info("Received {!r}".format(data.decode()))
 
                     if data:
                         detector = SoundDetector(10)
@@ -91,17 +92,21 @@ class TcpServer():
 
 
 async def main():
+    # initialize logging
+    logging.basicConfig(level = logging.INFO)
+
     # setup server: TcpServer(host, port)
     tcp_server = TcpServer("", 9999)
+
     # start a task that will listen for connection from clients asynchronously
     task = loop.create_task(tcp_server.start())
     await asyncio.wait(task)
+
 
 if __name__ == "__main__":
     try:
         # create an event loop for asyncio
         loop = asyncio.get_event_loop()
-
         # start the loop until main function completed its job
         loop.run_until_complete(main())
     except Exception as err:
