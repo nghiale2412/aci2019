@@ -18,4 +18,4 @@ spec:
         - containerPort: 27015
           protocol: TCP
       nodeSelector:
-nodename: rpi3-5
+        nodename: pi
