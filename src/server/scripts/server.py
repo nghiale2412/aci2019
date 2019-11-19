@@ -12,6 +12,7 @@ class SoundDetector():
         self.chunk = 1024
         self.format = pyaudio.paInt16
         self.channels = 1
+        self.dev_index = 2
         self.rate = 44100
         self.record_seconds = 10
         self.swidth = 2
@@ -32,7 +33,8 @@ class SoundDetector():
 
     def start_recording(self, connection):
         stream = self.pyrecord.open(format=self.format, channels=self.channels,
-                                    rate=self.rate, input=True, output=True,
+                                    rate=self.rate, input=True,
+                                    input_device_index=self.dev_index,
                                     frames_per_buffer=self.chunk)
         logging.info("start recording")
         for i in range(0, int(44100 / self.chunk * self.record_seconds)):

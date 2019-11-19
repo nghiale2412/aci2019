@@ -12,7 +12,7 @@ class TcpClient():
 
 def main():
     tcp_client = TcpClient()
-    tcp_client.establish_connection("192.168.43.208", 27015)
+    tcp_client.establish_connection("10.110.60.135", 30666)
     while True:
         message = input('Enter message here: ')
         message_encode = message.encode()
